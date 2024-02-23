@@ -1,1 +1,5 @@
 /venv-dukka
+/accounts/__pycache__/
+/accounts/migrations/__pycache__/
+/__pycache__/
+__pycache__/
