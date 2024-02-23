@@ -4,7 +4,6 @@ attrs==21.4.0
 billiard==3.6.4.0
 certifi==2021.10.8
 colorama==0.4.4
-decouple==0.0.7
 Deprecated==1.2.13
 distlib==0.3.8
 Django==5.0.2
@@ -40,6 +39,7 @@ mdurl==0.1.2
 ordered-set==4.1.0
 platformdirs==4.2.0
 prison==0.2.1
+psycopg2==2.9.9
 Pygments==2.14.0
 pyrsistent==0.18.1
 python-decouple==3.5
