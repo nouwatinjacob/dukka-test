@@ -47,6 +47,8 @@ packaging==23.2
 phonenumbers==8.13.30
 platformdirs==4.2.0
 prison==0.2.1
+psycopg==3.1.18
+psycopg-binary==3.1.18
 psycopg2==2.9.9
 Pygments==2.14.0
 PyJWT==2.8.0
