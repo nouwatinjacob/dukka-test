@@ -1,9 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, permissions
+from rest_framework import status, permissions, generics
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, login, logout
 from .serializers import UserSerializer, LoginSerializer
+from .models import CustomUser
 
 class RegisterView(APIView):
     def post(self, request):
@@ -30,3 +31,11 @@ class LogoutView(APIView):
     def get(self, request):
         logout(request)
         return Response({"message": "Logged out"}, status=status.HTTP_200_OK)
+    
+class UserRetrieve(APIView):
+    """ Get Particular user detail """
+    permission_classes = (permissions.IsAuthenticated,)
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(instance=user)
+        return Response({"data": serializer.data}, status=status.HTTP_200_OK)

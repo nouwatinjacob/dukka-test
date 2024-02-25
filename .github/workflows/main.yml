@@ -1,4 +1,4 @@
-name: Django CI
+name: Dukka-Test CI
 
 on:
   push:
