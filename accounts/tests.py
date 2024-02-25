@@ -25,3 +25,9 @@ class AuthenticationTests(APITestCase):
         self.client.login(email='test_user@gmail.com', password='test_password')
         response = self.client.get(reverse('logout'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        
+    def test_retrieve_user_detail(self):
+        user = CustomUser.objects.create_user(email='test_user@gmail.com', password='test_password')
+        self.client.login(email='test_user@gmail.com', password='test_password')
+        response = self.client.get(reverse('user_detail'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
