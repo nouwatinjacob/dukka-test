@@ -9,6 +9,7 @@ click==8.1.7
 colorama==0.4.4
 Deprecated==1.2.13
 distlib==0.3.8
+dj-database-url==2.1.0
 Django==5.0.2
 django-countries==7.2.1
 django-filter==22.1
@@ -75,4 +76,3 @@ virtualenv==20.25.1
 wcwidth==0.2.5
 Werkzeug==2.2.3
 wrapt==1.13.3
-WTForms==3.0.1
