@@ -78,21 +78,21 @@ WSGI_APPLICATION = 'dukka.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-if config("DATABASE_URL"):
-    DATABASES = {
-        'default': dj_database_url.parse(config("DATABASE_URL"))
-        }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': config('DB_NAME'),
-            'USER': config('DB_USER'),
-            'PASSWORD': config('DB_PASSWORD'),
-            'HOST': config('DB_HOST'),
-            'PORT': '5432',
-        }
+# if config("DATABASE_URL", ''):
+#     DATABASES = {
+#         'default': dj_database_url.parse(config("DATABASE_URL"))
+#         }
+# else:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': '5432',
     }
+}
 
 
 
