@@ -12,11 +12,11 @@ services:
     buildCommand: "./build.sh"
     startCommand: "python -m gunicorn dukka.asgi:application -k uvicorn.workers.UvicornWorker"
     envVars:
-      - key: postgres://dukka_user:rSbbi0Rrw1iS3IW4gFM1xOJUR9aH7WuX@dpg-cne14m5a73kc73b8jab0-a/dukka_db
+      - key: DATABASE_URL
         fromDatabase:
           name: dukka-test
           property: connectionString
-      - key: gftrhrhffbfgfgfbfgbnshjyrvm
+      - key: SECRET_KEY
         generateValue: true
       - key: WEB_CONCURRENCY
         value: 4
