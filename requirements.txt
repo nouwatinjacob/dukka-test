@@ -1,12 +1,15 @@
 asgiref==3.7.2
+async-timeout==4.0.3
+click==8.1.7
 dj-database-url==2.1.0
 Django==5.0.2
+django-cors-headers==4.3.1
 django-countries==7.5.1
 django-phonenumber-field==7.3.0
 django-phonenumbers==1.0.1
 djangorestframework==3.14.0
-gnureadline @ https://github.com/ludwigschwardt/python-gnureadline/archive/master.zip#sha256=012e79ef3de810f84803cc0b9da74cbb8412cf27c8d20a83e5b775c6655b5b94
 gunicorn==21.2.0
+h11==0.14.0
 packaging==23.2
 phonenumbers==8.13.30
 psycopg-binary==3.1.18
@@ -15,3 +18,4 @@ python-decouple==3.8
 pytz==2024.1
 sqlparse==0.4.4
 typing_extensions==4.10.0
+uvicorn==0.27.1

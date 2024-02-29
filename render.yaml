@@ -1,0 +1,22 @@
+databases:
+  - name: dukka-test
+    plan: free
+    databaseName: dukka_db
+    user: dukka_user
+
+services:
+  - type: web
+    plan: free
+    name: dukka
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "python -m gunicorn dukka.asgi:application -k uvicorn.workers.UvicornWorker"
+    envVars:
+      - key: postgres://dukka_user:rSbbi0Rrw1iS3IW4gFM1xOJUR9aH7WuX@dpg-cne14m5a73kc73b8jab0-a/dukka_db
+        fromDatabase:
+          name: dukka-test
+          property: connectionString
+      - key: gftrhrhffbfgfgfbfgbnshjyrvm
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
