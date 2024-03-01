@@ -35,22 +35,10 @@ ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = "accounts.CustomUser"
 
 # CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_ALL_ORIGINS=True
+ALLOWED_HOSTS=['*']
 
-CORS_ALLOWED_ORIGINS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_REPLACE_HTTPS_REFERER = True
-
-CORS_ALLOW_CREDENTIALS = True
-
-CORS_ALLOW_METHODS = (
-        'GET',
-        'POST',
-        'PUT',
-        'PATCH',
-        'DELETE',
-        'OPTIONS'
-)
 
 # Application definition
 
@@ -63,7 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
