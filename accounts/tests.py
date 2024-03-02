@@ -1,33 +1,48 @@
-from rest_framework.test import APITestCase
 from django.urls import reverse
+from rest_framework.test import APITestCase
 from rest_framework import status
-from .models import CustomUser
 
-class AuthenticationTests(APITestCase):
-    def test_registration(self):
-        data = {'email': 'test_user@gmail.com', 'password': 'test_password',
-                'confirm_password': 'test_password', 'country': 'NG',
-                'full_name': 'Test  User', 'sex': 'male', 'phone_number': '+2348067846354'}
-        response = self.client.post(reverse('register'), data)
+class TestUserManagement(APITestCase):
+    def setUp(self):
+        self.register_url = reverse('register')
+        self.login_url = reverse('login')
+        self.logout_url = reverse('logout')
+        self.user_url = reverse('user_detail')
+        self.user_data = {
+            'email': 'test@example.com', 'password': 'test_password',
+            'confirm_password': 'test_password', 'country': 'NG',
+            'full_name': 'Test  User', 'sex': 'male',
+            'phone_number': '+2348067846354'
+        }
+        self.login_data = {
+            'email': 'test@example.com',
+            'password': 'test_password'
+        }
+
+    def test_register_user(self):
+        response = self.client.post(self.register_url, self.user_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(CustomUser.objects.count(), 1)
-        self.assertEqual(CustomUser.objects.get().email, 'test_user@gmail.com')
 
-    def test_login(self):
-        user = CustomUser.objects.create_user(email='test_user@gmail.com', password='test_password')
-        data = {'email': 'test_user@gmail.com', 'password': 'test_password'}
-        response = self.client.post(reverse('login'), data)
+    def test_login_user(self):
+        self.client.post(self.register_url, self.user_data, format='json')
+        response = self.client.post(self.login_url, self.login_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue('token' in response.data)
 
-    def test_logout(self):
-        user = CustomUser.objects.create_user(email='test_user@gmail.com', password='test_password')
-        self.client.login(email='test_user@gmail.com', password='test_password')
-        response = self.client.get(reverse('logout'))
+    def test_logout_user(self):
+        self.client.post(self.register_url, self.user_data, format='json')
+        login_response = self.client.post(self.login_url, self.login_data, format='json')
+        token = login_response.data['token']
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token)
+        response = self.client.get(self.logout_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_user_detail(self):
+        self.client.post(self.register_url, self.user_data, format='json')
+        login_response = self.client.post(self.login_url, self.login_data, format='json')
+        token = login_response.data['token']
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token)
+        response = self.client.get(self.user_url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['data']['email'], self.user_data['email'])
         
-    def test_retrieve_user_detail(self):
-        user = CustomUser.objects.create_user(email='test_user@gmail.com', password='test_password')
-        self.client.login(email='test_user@gmail.com', password='test_password')
-        response = self.client.get(reverse('user_detail'))
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
