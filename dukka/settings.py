@@ -10,10 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
-import dj_database_url
 from pathlib import Path
 from decouple import config
 from dotenv import load_dotenv
+from datetime import timedelta
 
 load_dotenv()
 
@@ -30,14 +30,7 @@ SECRET_KEY = 'django-insecure-b5gpjz_6#=r2p7ca1p#4yqy8u^cp%wz8b_u4j5(pt__637(zn3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['*']
-
 AUTH_USER_MODEL = "accounts.CustomUser"
-
-# CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS=['*']
-
-CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Application definition
@@ -51,25 +44,39 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
-    'corsheaders'
+    'rest_framework_simplejwt.token_blacklist',
+    'corsheaders',
 ]
+
+ALLOWED_HOSTS = ['*']
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS = [
+#     'https://dukka-zszl.onrender.com', 'http://127.0.0.1:8000',
+#     'http://127.0.0.1:3000', 'http://localhost:3000'
+# ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
+}
+
+SIMPLE_JWT = {
+     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+     'ROTATE_REFRESH_TOKENS': True,
+     'BLACKLIST_AFTER_ROTATION': True
 }
 
 ROOT_URLCONF = 'dukka.urls'

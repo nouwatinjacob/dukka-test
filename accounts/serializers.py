@@ -32,7 +32,7 @@ class UserSerializer(serializers.ModelSerializer):
                                               full_name=validated_data['full_name'], sex=validated_data['sex'],
                                               phone_number=validated_data['phone_number'], country=validated_data['country'])
 
-        return user 
+        return user
         
 
 
@@ -41,6 +41,13 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField()
 
     def validate(self, data):
-        user = authenticate(**data)
+        errors = {}
+        try:
+            user = CustomUser.objects.get(email = data['email'])
+        except CustomUser.DoesNotExist:
+            errors['email'] = ['This Email is already in use']
+        if not user.check_password(data['password']):
+            errors['password'] = ['Incorrect Password']
+        
         return user
         

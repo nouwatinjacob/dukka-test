@@ -26,7 +26,7 @@ def validate_phone(value):
             "Enter a valid phone number (e.g. +2347012345678) - a number with an international call prefix."
         )
 class CustomUser(AbstractUser):
-    GENDER_CHOICES = [('male', 'Male'), ('female', 'Female')]
+    GENDER_CHOICES = [('male', 'Male'), ('female', 'Female'), ('Male', 'Male'), ('Female', 'Female')]
     username = None
     email = models.EmailField(_('Email address'), unique=True)
     full_name = models.CharField(_("User full name"), max_length=100, blank=True)

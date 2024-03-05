@@ -27,21 +27,20 @@ class TestUserManagement(APITestCase):
         self.client.post(self.register_url, self.user_data, format='json')
         response = self.client.post(self.login_url, self.login_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertTrue('token' in response.data)
+        self.assertTrue('access_token' in response.data)
 
     def test_logout_user(self):
         self.client.post(self.register_url, self.user_data, format='json')
         login_response = self.client.post(self.login_url, self.login_data, format='json')
-        token = login_response.data['token']
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token)
-        response = self.client.get(self.logout_url)
+        refresh_token = login_response.data['refresh_token']
+        response = self.client.post(self.logout_url, {"refresh_token": refresh_token})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_user_detail(self):
         self.client.post(self.register_url, self.user_data, format='json')
         login_response = self.client.post(self.login_url, self.login_data, format='json')
-        token = login_response.data['token']
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token)
+        access_token = login_response.data['access_token']
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + access_token)
         response = self.client.get(self.user_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['data']['email'], self.user_data['email'])
