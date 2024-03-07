@@ -31,7 +31,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(_('Email address'), unique=True)
     full_name = models.CharField(_("User full name"), max_length=100, blank=True)
     sex = models.CharField(_("User gender"), max_length=6, blank=True, choices=GENDER_CHOICES, default='male')
-    phone_number = models.CharField(_("User Phone number"), max_length=20, blank=True, validators=[validate_phone])
+    phone_number = models.CharField(_("User Phone number"), max_length=20, blank=True)
     country = models.CharField(_("Country"), blank=True)
 
     objects = UserManager()
